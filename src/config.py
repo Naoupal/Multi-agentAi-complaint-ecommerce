@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- LLM Provider ---
-# Pilih salah satu: "openai", "anthropic", "ollama"
+# Pilih salah satu: "openai", "anthropic", "ollama", "groq", "gemini"
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -49,6 +49,24 @@ def get_llm_config():
                 "model": "claude-sonnet-4-6",
                 "api_key": ANTHROPIC_API_KEY,
                 "api_type": "anthropic",
+            }],
+            "temperature": 0,
+        }
+    elif LLM_PROVIDER == "groq":
+        return {
+            "config_list": [{
+                "model": os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+                "base_url": "https://api.groq.com/openai/v1",
+                "api_key": os.getenv("GROQ_API_KEY", ""),
+            }],
+            "temperature": 0,
+        }
+    elif LLM_PROVIDER == "gemini":
+        return {
+            "config_list": [{
+                "model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+                "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+                "api_key": os.getenv("GEMINI_API_KEY", ""),
             }],
             "temperature": 0,
         }

@@ -1,12 +1,21 @@
+import re
 import autogen
 from src.rag.retriever import Retriever
 from src.config import get_llm_config
 
 _retriever = Retriever(domain="logistics")
+ORDER_ID_PATTERN = re.compile(r"\b[0-9a-f]{32}\b")
 
 
 def search_logistics(query: str) -> str:
     """Cari status pengiriman/kurir berdasarkan pertanyaan pelanggan tentang order."""
+    match = ORDER_ID_PATTERN.search(query)
+    if match:
+        order_id = match.group(0)
+        docs, metas = _retriever.get_by_id(order_id)
+        if docs:
+            return "\n".join(f"- {d}" for d in docs)
+
     docs, metas = _retriever.query(query, top_k=3)
     if not docs:
         return "Tidak ditemukan data pengiriman yang relevan untuk pertanyaan ini."
@@ -31,10 +40,15 @@ def build_logistics_agent():
         ),
         llm_config=llm_config,
     )
-    agent.register_for_llm(
+
+    autogen.register_function(
+        search_logistics,
+        caller=agent,
+        executor=agent,
         name="search_logistics",
         description="Cari status pengiriman/kurir sebuah order berdasarkan pertanyaan pelanggan",
-    )(search_logistics)
+    )
+
     return agent
 
 

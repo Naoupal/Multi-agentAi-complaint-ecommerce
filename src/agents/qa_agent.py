@@ -1,12 +1,20 @@
+import re
 import autogen
 from src.rag.retriever import Retriever
 from src.config import get_llm_config
 
 _retriever = Retriever(domain="qa")
-
+ORDER_ID_PATTERN = re.compile(r"\b[0-9a-f]{32}\b")
 
 def search_qa(query: str) -> str:
     """Cari riwayat ulasan/rating produk berdasarkan pertanyaan pelanggan tentang order."""
+    match = ORDER_ID_PATTERN.search(query)
+    if match:
+        order_id = match.group(0)
+        docs, metas = _retriever.get_by_metadata("order_id", order_id)
+        if docs:
+            return "\n".join(f"- {d}" for d in docs)
+
     docs, metas = _retriever.query(query, top_k=3)
     if not docs:
         return "Tidak ditemukan data ulasan yang relevan untuk pertanyaan ini."
@@ -29,10 +37,15 @@ def build_qa_agent():
         ),
         llm_config=llm_config,
     )
-    agent.register_for_llm(
+
+    autogen.register_function(
+        search_qa,
+        caller=agent,
+        executor=agent,
         name="search_qa",
         description="Cari riwayat ulasan dan rating sebuah order berdasarkan pertanyaan pelanggan",
-    )(search_qa)
+    )
+
     return agent
 
 

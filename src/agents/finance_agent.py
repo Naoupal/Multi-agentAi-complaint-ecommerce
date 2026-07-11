@@ -1,12 +1,20 @@
+import re
 import autogen
 from src.rag.retriever import Retriever
 from src.config import get_llm_config
 
 _retriever = Retriever(domain="finance")
-
+ORDER_ID_PATTERN = re.compile(r"\b[0-9a-f]{32}\b")
 
 def search_finance(query: str) -> str:
     """Cari status pembayaran/transaksi berdasarkan pertanyaan pelanggan tentang order."""
+    match = ORDER_ID_PATTERN.search(query)
+    if match:
+        order_id = match.group(0)
+        docs, metas = _retriever.get_by_id(order_id)
+        if docs:
+            return "\n".join(f"- {d}" for d in docs)
+
     docs, metas = _retriever.query(query, top_k=3)
     if not docs:
         return "Tidak ditemukan data pembayaran yang relevan untuk pertanyaan ini."
@@ -31,10 +39,17 @@ def build_finance_agent():
         ),
         llm_config=llm_config,
     )
-    agent.register_for_llm(
+
+    # Daftarkan caller DAN executor sekaligus, supaya fungsi
+    # benar-benar dieksekusi setelah LLM memutuskan memanggilnya.
+    autogen.register_function(
+        search_finance,
+        caller=agent,
+        executor=agent,
         name="search_finance",
         description="Cari status pembayaran/transaksi sebuah order berdasarkan pertanyaan pelanggan",
-    )(search_finance)
+    )
+
     return agent
 
 
