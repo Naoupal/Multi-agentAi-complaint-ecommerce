@@ -1,13 +1,13 @@
-# 🛒 Multi-Agent Complaint Resolution System
+# Multi-Agent Complaint Resolution System
 ### Retrieval-Augmented Generation (RAG) + AutoGen Multi-Agent Framework
 
 A collaborative **multi-agent customer complaint resolution system** for e-commerce that combines **Retrieval-Augmented Generation (RAG)** with **AutoGen** to provide domain-specific, explainable, and evidence-based responses.
 
 The system is composed of an **Orchestrator Agent** that coordinates three specialized domain agents:
 
-- 🚚 Logistics Agent
-- 💰 Finance Agent
-- ✅ Quality Assurance (QA) Agent
+- Logistics Agent
+- Finance Agent
+- Quality Assurance (QA) Agent
 
 An additional **Evaluator Agent** automatically measures system performance using predefined evaluation metrics.
 
