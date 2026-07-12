@@ -13,7 +13,8 @@ class ComplaintRequest(BaseModel):
 def resolve_complaint(req: ComplaintRequest):
     transcript = handle_complaint(req.message)
     final_response = transcript[-1]["content"] if transcript else "Tidak ada respons."
-    return {"response": final_response, "trace": transcript}
+    final_response_clean = final_response.replace("SELESAI", "").strip()
+    return {"response": final_response_clean, "trace": transcript}
 
 
 @app.get("/health")

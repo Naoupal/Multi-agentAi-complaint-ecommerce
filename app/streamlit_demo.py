@@ -18,8 +18,9 @@ if st.button("Kirim Keluhan", type="primary"):
         with st.spinner("Agent-agent sedang berkoordinasi..."):
             transcript = handle_complaint(msg)
         final = transcript[-1]["content"] if transcript else "Tidak ada respons."
+        final_display = final.replace("SELESAI", "").strip()  
         st.subheader("Jawaban Akhir")
-        st.write(final)
+        st.write(final_display)
 
         with st.expander("Lihat trace percakapan antar-agent"):
             for m in transcript:
