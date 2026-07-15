@@ -267,59 +267,18 @@ http://127.0.0.1:8000/docs
 
 ```bash
 streamlit run app/streamlit_demo.py
-```
+\`\`\`
 
----
+## Struktur
 
-# Retrieval Pipeline
+\`\`\`
+app/            -> FastAPI (api.py) & Streamlit demo (streamlit_demo.py)
+data/raw/       -> dataset mentah Olist (tidak di-commit, lihat .gitignore)
+src/agents/     -> orchestrator, logistics, finance, qa, evaluator agent
+src/ingestion/  -> script build vectorstore per domain
+src/rag/        -> embedder & retriever (RAG pipeline)
+src/config.py   -> konfigurasi provider LLM, path, dan sampling
+tests/          -> skenario uji untuk evaluator
+\`\`\`
 
-```
-Customer Complaint
-        │
-        ▼
-Orchestrator Agent
-        │
-        ▼
-Select Relevant Domain Agent
-        │
-        ▼
-Hybrid Retrieval
-(Keyword + Semantic Search)
-        │
-        ▼
-ChromaDB
-        │
-        ▼
-LLM Reasoning
-        │
-        ▼
-Final Response
-```
-
----
-
-# Evaluation Metrics
-
-The Evaluator Agent automatically assesses system quality based on:
-
-- Accuracy
-- Efficiency
-- Explainability
-- Hallucination Detection
-
----
-
-# Future Improvements
-
-- Multi-turn conversation memory
-- Tool calling
-- Automatic complaint categorization
-- Cross-domain agent collaboration
-- Docker deployment
-- Kubernetes support
-
----
-
-# License
-
-This project is intended for educational and research purposes.
+Dokumentasi arsitektur lengkap: `Proposal_Multi_Agent_Ecommerce.docx`.
