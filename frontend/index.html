@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Agent Complaint Resolution — E-Commerce</title>
+  <meta name="description" content="Sistem resolusi komplain e-commerce berbasis Multi-Agent AI dengan RAG, AutoGen, dan ChromaDB. Menangani keluhan logistik, keuangan, dan kualitas produk secara otomatis." />
+
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 8V4H8'/><rect width='16' height='12' x='4' y='8' rx='2'/><path d='M2 14h2'/><path d='M20 14h2'/><path d='M15 13v2'/><path d='M9 13v2'/></svg>" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Ambient Background Glow -->
+  <div class="ambient-glow"></div>
+
+  <div class="app-container">
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+      <a class="navbar-brand" href="#">
+        <div class="navbar-logo">
+          <i data-lucide="bot" class="icon-sm"></i>
+        </div>
+        <span class="navbar-title">Multi-Agent Complaint AI</span>
+      </a>
+      <div class="navbar-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Checking...</span>
+      </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-badge">
+        <i data-lucide="zap" class="icon-xs"></i>
+        Powered by <span>AutoGen + RAG + ChromaDB</span>
+      </div>
+      <h1>
+        Resolusi Komplain<br />
+        <span class="gradient-text">Multi-Agent AI</span>
+      </h1>
+      <p>
+        Sistem cerdas yang mengkoordinasikan beberapa AI agent untuk menyelesaikan keluhan pelanggan e-commerce secara otomatis — didukung oleh Retrieval-Augmented Generation.
+      </p>
+    </section>
+
+    <!-- ===== Architecture Cards ===== -->
+    <div class="arch-row">
+      <div class="arch-card orchestrator">
+        <i data-lucide="cpu" class="icon-card"></i>
+        <span>Orchestrator Agent</span>
+      </div>
+      <div class="arch-card logistics">
+        <i data-lucide="truck" class="icon-card"></i>
+        <span>Logistics Agent</span>
+      </div>
+      <div class="arch-card finance">
+        <i data-lucide="wallet" class="icon-card"></i>
+        <span>Finance Agent</span>
+      </div>
+      <div class="arch-card qa">
+        <i data-lucide="shield-check" class="icon-card"></i>
+        <span>QA Agent</span>
+      </div>
+    </div>
+
+    <!-- ===== MAIN: Chat + Sidebar ===== -->
+    <section class="chat-section">
+
+      <!-- Chat Panel -->
+      <div class="chat-panel">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <div class="dot-group">
+              <span></span><span></span><span></span>
+            </div>
+            <h3>
+              <i data-lucide="message-circle" class="icon-xs"></i>
+              Complaint Chat
+            </h3>
+          </div>
+          <div class="chat-header-right">Kirim keluhan Anda</div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-empty">
+            <div class="empty-icon">
+              <i data-lucide="message-square-plus" class="icon-xl"></i>
+            </div>
+            <h4>Selamat Datang!</h4>
+            <p>Ketik keluhan Anda di bawah, atau pilih salah satu contoh untuk memulai.</p>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <textarea
+              class="chat-input"
+              id="chatInput"
+              placeholder="Ketik keluhan pelanggan di sini..."
+              rows="1"
+            ></textarea>
+            <button class="btn-send" id="btnSend" title="Kirim Keluhan">
+              <i data-lucide="send-horizontal" class="icon-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar-panel">
+
+        <!-- Agent Summary -->
+        <div class="agents-card">
+          <h3>
+            <i data-lucide="users" class="icon-xs"></i>
+            Agent yang Terlibat
+          </h3>
+          <div class="agent-badges">
+            <span class="agent-badge orchestrator" data-agent="orchestrator">
+              <i data-lucide="cpu" class="icon-badge"></i> Orchestrator
+            </span>
+            <span class="agent-badge logistics" data-agent="logistics">
+              <i data-lucide="truck" class="icon-badge"></i> Logistics
+            </span>
+            <span class="agent-badge finance" data-agent="finance">
+              <i data-lucide="wallet" class="icon-badge"></i> Finance
+            </span>
+            <span class="agent-badge qa" data-agent="qa">
+              <i data-lucide="shield-check" class="icon-badge"></i> QA
+            </span>
+          </div>
+        </div>
+
+        <!-- Agent Trace -->
+        <div class="trace-card">
+          <div class="trace-header">
+            <h3>
+              <i data-lucide="list-tree" class="icon-xs"></i>
+              Trace Percakapan
+            </h3>
+            <span class="trace-count" id="traceCount">0</span>
+          </div>
+          <div class="trace-body" id="traceBody">
+            <div class="trace-empty">
+              <div class="trace-empty-icon">
+                <i data-lucide="scan-search" class="icon-lg"></i>
+              </div>
+              Belum ada trace. Kirim keluhan untuk melihat percakapan antar-agent.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Example Complaints ===== -->
+    <section class="examples-section">
+      <h3>
+        <i data-lucide="lightbulb" class="icon-xs"></i>
+        Contoh Keluhan — Klik untuk Mencoba
+      </h3>
+      <div class="examples-grid">
+        <div class="example-card" data-complaint="Order saya 00275bce676303c3bfd7292aefdfa223 kapan sampai ya?">
+          <span class="example-icon"><i data-lucide="truck" class="icon-example"></i></span>
+          <div>
+            <div class="example-label">Logistik</div>
+            <div class="example-text">Order saya 00275bce676303c3bfd7292aefdfa223 kapan sampai ya?</div>
+          </div>
+        </div>
+        <div class="example-card" data-complaint="Saya sudah bayar order 00275bce676303c3bfd7292aefdfa223 tapi mau tahu status pembayarannya, sudah lunas belum?">
+          <span class="example-icon"><i data-lucide="credit-card" class="icon-example"></i></span>
+          <div>
+            <div class="example-label">Keuangan</div>
+            <div class="example-text">Saya sudah bayar tapi mau tahu status pembayarannya, sudah lunas belum?</div>
+          </div>
+        </div>
+        <div class="example-card" data-complaint="Produk yang saya terima kualitasnya jelek, apakah ada keluhan serupa dari pembeli lain untuk order sejenis?">
+          <span class="example-icon"><i data-lucide="star" class="icon-example"></i></span>
+          <div>
+            <div class="example-label">Kualitas Produk</div>
+            <div class="example-text">Produk yang saya terima kualitasnya jelek, apakah ada keluhan serupa?</div>
+          </div>
+        </div>
+        <div class="example-card" data-complaint="Order saya telat lebih dari 14 hari, saya mau minta refund penuh">
+          <span class="example-icon"><i data-lucide="refresh-cw" class="icon-example"></i></span>
+          <div>
+            <div class="example-label">Gabungan (Logistik + Keuangan)</div>
+            <div class="example-text">Order saya telat lebih dari 14 hari, saya mau minta refund penuh</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+      <p>Multi-Agent Complaint Resolution System — Educational & Research Project</p>
+      <div class="tech-stack">
+        <span class="tech-item"><i data-lucide="bot" class="icon-tech"></i> AutoGen</span>
+        <span class="tech-item"><i data-lucide="brain" class="icon-tech"></i> RAG</span>
+        <span class="tech-item"><i data-lucide="database" class="icon-tech"></i> ChromaDB</span>
+        <span class="tech-item"><i data-lucide="zap" class="icon-tech"></i> FastAPI</span>
+        <span class="tech-item"><i data-lucide="code" class="icon-tech"></i> Python</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
