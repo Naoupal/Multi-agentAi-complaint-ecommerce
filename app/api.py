@@ -46,6 +46,12 @@ def serve_frontend():
     return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
 
 
+@app.get("/shop")
+def serve_ecommerce():
+    """Serve the e-commerce page with integrated AI chat widget."""
+    return FileResponse(os.path.join(FRONTEND_DIR, "ecommerce.html"))
+
+
 # --- Static files mount (MUST be LAST to avoid catching API routes) ---
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 

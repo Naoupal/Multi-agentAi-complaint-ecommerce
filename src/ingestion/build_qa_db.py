@@ -24,6 +24,7 @@ def load_data():
 
     # satu order kadang punya lebih dari satu review; ambil review terakhir saja
     reviews = reviews.sort_values("review_answer_timestamp").drop_duplicates("order_id", keep="last")
+    reviews = reviews.drop_duplicates(subset="review_id", keep="last")
     return reviews
 
 
