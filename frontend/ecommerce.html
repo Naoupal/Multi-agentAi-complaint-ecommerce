@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BelanjaPintar — Belanja Online Terpercaya</title>
+  <meta name="description" content="BelanjaPintar — Platform belanja online terpercaya dengan customer service AI yang siap membantu 24/7." />
+
+  <link rel="stylesheet" href="/static/ecommerce.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF6B35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='21' r='1'/><circle cx='19' cy='21' r='1'/><path d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'/></svg>" />
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="ec-navbar">
+    <div class="ec-navbar-inner">
+      <a class="ec-brand" href="/shop">
+        <div class="ec-brand-icon">
+          <i data-lucide="shopping-bag" style="width:20px;height:20px"></i>
+        </div>
+        <span class="ec-brand-name">Belanja<span>Pintar</span></span>
+      </a>
+
+      <div class="ec-search">
+        <i data-lucide="search" class="ec-search-icon"></i>
+        <input type="text" placeholder="Cari produk, kategori, atau brand..." />
+      </div>
+
+      <div class="ec-nav-actions">
+        <button class="ec-nav-btn">
+          <i data-lucide="bell" style="width:18px;height:18px"></i>
+          <span class="badge">3</span>
+        </button>
+        <button class="ec-nav-btn">
+          <i data-lucide="shopping-cart" style="width:18px;height:18px"></i>
+          <span class="badge">2</span>
+        </button>
+        <button class="ec-nav-btn">
+          <i data-lucide="user-circle" style="width:18px;height:18px"></i>
+          <span style="font-size:0.83rem">Akun</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN ===== -->
+  <main class="ec-main">
+
+    <!-- Hero Banner -->
+    <section class="ec-hero">
+      <div class="ec-hero-content">
+        <div class="ec-hero-badge">
+          <i data-lucide="zap" style="width:13px;height:13px"></i>
+          MEGA SALE 7.7
+        </div>
+        <h2>Diskon Hingga 70%<br/>+ Gratis Ongkir!</h2>
+        <p>Belanja ribuan produk pilihan dengan harga terbaik. Promo terbatas, jangan sampai kehabisan.</p>
+        <button class="ec-hero-btn">
+          <i data-lucide="arrow-right" style="width:18px;height:18px"></i>
+          Belanja Sekarang
+        </button>
+      </div>
+    </section>
+
+    <!-- Pesanan Saya -->
+    <section class="ec-orders">
+      <div class="ec-section-header">
+        <h3 class="ec-section-title">
+          <i data-lucide="package"></i>
+          Pesanan Saya
+        </h3>
+        <a href="#" class="ec-section-link">
+          Lihat Semua <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="ec-orders-grid">
+        <!-- Order 1 — Dikirim -->
+        <div class="ec-order-card">
+          <div class="ec-order-top">
+            <span class="ec-order-id">ORD-00275BCE6763</span>
+            <span class="ec-order-status shipped">
+              <i data-lucide="truck"></i> Dikirim
+            </span>
+          </div>
+          <div class="ec-order-product">
+            <img class="ec-order-thumb" src="/static/images/product_earbuds.jpg" alt="Wireless Earbuds" />
+            <div class="ec-order-product-info">
+              <h4>Wireless Earbuds Pro X1</h4>
+              <p>Putih · 1 barang</p>
+            </div>
+          </div>
+          <div class="ec-order-bottom">
+            <span class="ec-order-price">Rp 299.000</span>
+            <button class="ec-order-action order-complaint-btn" data-complaint="Order saya 00275bce676303c3bfd7292aefdfa223 kapan sampai ya? Sudah lama sekali menunggu.">
+              <i data-lucide="message-circle"></i> Komplain
+            </button>
+          </div>
+        </div>
+
+        <!-- Order 2 — Diproses -->
+        <div class="ec-order-card">
+          <div class="ec-order-top">
+            <span class="ec-order-id">ORD-8272B1A4F5E0</span>
+            <span class="ec-order-status processing">
+              <i data-lucide="loader"></i> Diproses
+            </span>
+          </div>
+          <div class="ec-order-product">
+            <img class="ec-order-thumb" src="/static/images/product_smartwatch.jpg" alt="Smart Watch" />
+            <div class="ec-order-product-info">
+              <h4>Smart Watch Ultra S3</h4>
+              <p>Hitam · 1 barang</p>
+            </div>
+          </div>
+          <div class="ec-order-bottom">
+            <span class="ec-order-price">Rp 1.499.000</span>
+            <button class="ec-order-action order-complaint-btn" data-complaint="Saya sudah bayar order 00275bce676303c3bfd7292aefdfa223 tapi mau tahu status pembayarannya, sudah lunas belum?">
+              <i data-lucide="message-circle"></i> Komplain
+            </button>
+          </div>
+        </div>
+
+        <!-- Order 3 — Selesai -->
+        <div class="ec-order-card">
+          <div class="ec-order-top">
+            <span class="ec-order-id">ORD-F3A5C2D891B7</span>
+            <span class="ec-order-status completed">
+              <i data-lucide="check-circle"></i> Selesai
+            </span>
+          </div>
+          <div class="ec-order-product">
+            <img class="ec-order-thumb" src="/static/images/product_backpack.jpg" alt="Urban Backpack" />
+            <div class="ec-order-product-info">
+              <h4>Urban Explorer Backpack</h4>
+              <p>Navy · 1 barang</p>
+            </div>
+          </div>
+          <div class="ec-order-bottom">
+            <span class="ec-order-price">Rp 389.000</span>
+            <button class="ec-order-action order-complaint-btn" data-complaint="Produk yang saya terima kualitasnya jelek, apakah ada keluhan serupa dari pembeli lain untuk order sejenis?">
+              <i data-lucide="message-circle"></i> Komplain
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Banner -->
+    <section class="ec-ai-banner">
+      <div class="ec-ai-banner-content">
+        <h3>
+          <i data-lucide="sparkles"></i>
+          Customer Service AI — Siap 24/7
+        </h3>
+        <p>Keluhan Anda akan ditangani oleh Multi-Agent AI yang mengoordinasikan Logistics, Finance, dan QA Agent secara otomatis.</p>
+      </div>
+      <button class="ec-ai-banner-btn" id="aiBannerBtn">
+        <i data-lucide="message-circle"></i>
+        Chat Sekarang
+      </button>
+    </section>
+
+    <!-- Produk Populer -->
+    <section class="ec-products">
+      <div class="ec-section-header">
+        <h3 class="ec-section-title">
+          <i data-lucide="flame"></i>
+          Produk Populer
+        </h3>
+        <a href="#" class="ec-section-link">
+          Lihat Semua <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="ec-products-grid">
+        <!-- Product 1 -->
+        <div class="ec-product-card">
+          <img class="ec-product-img" src="/static/images/product_earbuds.jpg" alt="Wireless Earbuds Pro X1" />
+          <div class="ec-product-body">
+            <h4>Wireless Earbuds Pro X1</h4>
+            <div class="ec-product-stars">
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="empty" style="width:13px;height:13px"></i>
+              <span>4.2 (1.2rb)</span>
+            </div>
+            <span class="ec-product-price">Rp 299.000</span>
+            <span class="ec-product-price-old">Rp 599.000</span>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="ec-product-card">
+          <img class="ec-product-img" src="/static/images/product_smartwatch.jpg" alt="Smart Watch Ultra S3" />
+          <div class="ec-product-body">
+            <h4>Smart Watch Ultra S3</h4>
+            <div class="ec-product-stars">
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <span>4.8 (3.5rb)</span>
+            </div>
+            <span class="ec-product-price">Rp 1.499.000</span>
+            <span class="ec-product-price-old">Rp 2.499.000</span>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="ec-product-card">
+          <img class="ec-product-img" src="/static/images/product_backpack.jpg" alt="Urban Explorer Backpack" />
+          <div class="ec-product-body">
+            <h4>Urban Explorer Backpack</h4>
+            <div class="ec-product-stars">
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="empty" style="width:13px;height:13px"></i>
+              <span>4.3 (856)</span>
+            </div>
+            <span class="ec-product-price">Rp 389.000</span>
+            <span class="ec-product-price-old">Rp 550.000</span>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="ec-product-card">
+          <img class="ec-product-img" src="/static/images/product_shoes.jpg" alt="Running Shoes Max" />
+          <div class="ec-product-body">
+            <h4>Running Shoes Max Air</h4>
+            <div class="ec-product-stars">
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <i data-lucide="star" class="filled" style="width:13px;height:13px;fill:currentColor"></i>
+              <span>4.9 (2.1rb)</span>
+            </div>
+            <span class="ec-product-price">Rp 899.000</span>
+            <span class="ec-product-price-old">Rp 1.299.000</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="ec-footer">
+    <div class="ec-footer-inner">
+      <div class="ec-footer-col">
+        <h4>BelanjaPintar</h4>
+        <ul>
+          <li>Tentang Kami</li>
+          <li>Karir</li>
+          <li>Blog</li>
+          <li>Kebijakan Privasi</li>
+        </ul>
+      </div>
+      <div class="ec-footer-col">
+        <h4>Bantuan</h4>
+        <ul>
+          <li>Pusat Bantuan</li>
+          <li>Cara Belanja</li>
+          <li>Pengiriman</li>
+          <li>Pengembalian</li>
+        </ul>
+      </div>
+      <div class="ec-footer-col">
+        <h4>Kategori</h4>
+        <ul>
+          <li>Elektronik</li>
+          <li>Fashion</li>
+          <li>Olahraga</li>
+          <li>Rumah Tangga</li>
+        </ul>
+      </div>
+      <div class="ec-footer-col">
+        <h4>Ikuti Kami</h4>
+        <ul>
+          <li>Instagram</li>
+          <li>Twitter</li>
+          <li>Facebook</li>
+          <li>YouTube</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ec-footer-bottom">
+      © 2026 BelanjaPintar. Semua hak dilindungi. — Powered by Multi-Agent AI
+    </div>
+  </footer>
+
+  <!-- ===== CHAT WIDGET ===== -->
+
+  <!-- Floating Action Button -->
+  <button class="chat-fab" id="chatFab">
+    <i data-lucide="headset" style="width:26px;height:26px"></i>
+    <span class="fab-badge">1</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-widget" id="chatWidget">
+    <!-- Header -->
+    <div class="cw-header">
+      <div class="cw-header-left">
+        <div class="cw-avatar">
+          <i data-lucide="bot"></i>
+        </div>
+        <div class="cw-header-info">
+          <h4>AI Customer Service</h4>
+          <p><span class="online-dot"></span> Online — Siap membantu</p>
+        </div>
+      </div>
+      <button class="cw-close" id="cwClose">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div class="cw-messages" id="cwMessages">
+      <!-- Messages will be injected here -->
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="cw-quick-actions" id="cwQuickActions">
+      <button class="cw-quick-btn" data-message="Order saya 00275bce676303c3bfd7292aefdfa223 kapan sampai ya?">
+        <i data-lucide="truck"></i> Cek Pengiriman
+      </button>
+      <button class="cw-quick-btn" data-message="Order saya telat lebih dari 14 hari, saya mau minta refund penuh">
+        <i data-lucide="wallet"></i> Minta Refund
+      </button>
+      <button class="cw-quick-btn" data-message="Produk yang saya terima kualitasnya jelek, apakah ada keluhan serupa dari pembeli lain?">
+        <i data-lucide="shield-check"></i> Keluhan Produk
+      </button>
+    </div>
+
+    <!-- Input -->
+    <div class="cw-input-area">
+      <div class="cw-input-row">
+        <textarea
+          class="cw-input"
+          id="cwInput"
+          placeholder="Ketik keluhan Anda..."
+          rows="1"
+        ></textarea>
+        <button class="cw-send" id="cwSend">
+          <i data-lucide="send-horizontal"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Powered by -->
+    <div class="cw-powered">
+      Powered by <span>Multi-Agent AI</span> · AutoGen + RAG
+    </div>
+  </div>
+
+  <script src="/static/ecommerce.js"></script>
+</body>
+</html>
