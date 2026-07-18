@@ -1,10 +1,12 @@
 import os
+import json
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from src.agents.orchestrator_agent import handle_complaint
+from src.config import BASE_DIR
 
 app = FastAPI(title="Multi-Agent Complaint Resolution API")
 
@@ -17,8 +19,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Path to frontend folder ---
+# --- Paths ---
 FRONTEND_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend")
+
+ACTION_STORES = {
+    "refunds": os.path.join(BASE_DIR, "data", "refunds_store.json"),
+    "reships": os.path.join(BASE_DIR, "data", "reship_store.json"),
+    "replacements": os.path.join(BASE_DIR, "data", "replacement_store.json"),
+}
 
 
 class ComplaintRequest(BaseModel):
@@ -38,6 +46,23 @@ def resolve_complaint(req: ComplaintRequest):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/action-status/{order_id}")
+def get_action_status(order_id: str):
+    """Cek semua aksi (refund, reship, replacement) terkait order_id tertentu."""
+    result = {"order_id": order_id, "refunds": [], "reships": [], "replacements": []}
+
+    for key, path in ACTION_STORES.items():
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    records = json.load(f)
+                result[key] = [r for r in records if r.get("order_id") == order_id]
+            except (json.JSONDecodeError, IOError):
+                result[key] = []
+
+    return result
 
 
 @app.get("/")

@@ -53,9 +53,25 @@ orchestrator = autogen.AssistantAgent(
         "...' atau 'QAAgent, ...') -- ini dipakai sistem untuk mengarahkan giliran "
         "bicara secara otomatis, jadi harus akurat dan hanya sebut SATU nama agent "
         "per pesan delegasi.\n"
+        "- Kamu DILARANG menyebut nama agent LAIN (yang bukan tujuan delegasi saat "
+        "ini) di pesan manapun, termasuk sebagai referensi sumber informasi (contoh "
+        "yang DILARANG: 'berdasarkan informasi dari LogisticsAgent' atau 'seperti "
+        "yang dikonfirmasi FinanceAgent'). Sampaikan fakta secara LANGSUNG tanpa "
+        "menyebut siapa sumbernya (contoh yang BENAR: 'Order tersebut terkonfirmasi "
+        "telat 153 hari dari estimasi pengiriman.' -- BUKAN 'LogisticsAgent telah "
+        "mengkonfirmasi bahwa order tersebut telat 153 hari.'). Setiap pesan HANYA "
+        "boleh menyebut SATU nama agent: yaitu agent tujuan delegasi berikutnya, "
+        "atau TIDAK SATUPUN nama agent kalau pesan itu adalah rangkuman jawaban akhir.\n"
         "- Rangkuman jawaban akhir (poin 7) TIDAK BOLEH menyebut nama "
         "LogisticsAgent/FinanceAgent/QAAgent sama sekali (supaya sistem tahu ini "
-        "giliran terakhir, bukan delegasi baru)."
+        "giliran terakhir, bukan delegasi baru).\n\n"
+        "CONTOH DELEGASI BERANTAI YANG BENAR:\n"
+        "'Keterlambatan pengiriman order sudah terkonfirmasi, melebihi estimasi "
+        "lebih dari 14 hari. FinanceAgent, tolong proses refund penuh untuk order "
+        "ini.'\n\n"
+        "CONTOH YANG SALAH (JANGAN DITIRU):\n"
+        "'LogisticsAgent telah mengkonfirmasi keterlambatan. FinanceAgent, tolong "
+        "proses refund.'"
     ),
     llm_config=llm_config,
 )
@@ -75,6 +91,8 @@ def custom_speaker_selection(last_speaker, groupchat):
 
     if last_speaker in (logistics_agent, finance_agent, qa_agent):
         if has_pending_tool_call:
+            return last_speaker
+        if last_message.get("role") == "tool":
             return last_speaker
         return orchestrator
 

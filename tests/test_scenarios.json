@@ -18,5 +18,26 @@
     "id": "S4",
     "input": "Order saya telat lebih dari 14 hari, saya mau minta refund penuh",
     "expected_agents": ["LogisticsAgent", "FinanceAgent"]
+  },
+  {
+    "id": "S5",
+    "input": "Order dfe5f68118c2576143240b8d78e5940a sudah dibayar lunas tapi telat lebih dari 14 hari, tolong proses refund sekarang",
+    "expected_agents": ["FinanceAgent"],
+    "expect_action": true,
+    "expect_action_type": "refund"
+  },
+  {
+    "id": "S6",
+    "input": "Paket order bbdef4b5ecad947f721ab789db1dd57f saya hilang di perjalanan, tolong kirim ulang barangnya",
+    "expected_agents": ["LogisticsAgent"],
+    "expect_action": true,
+    "expect_action_type": "reship"
+  },
+  {
+    "id": "S7",
+    "input": "Barang dari order 7bd04fdb3a54efa83cbf7320b1bb4b6f kualitasnya rusak dan cacat, saya minta penggantian barang baru",
+    "expected_agents": ["QAAgent"],
+    "expect_action": true,
+    "expect_action_type": "replacement"
   }
 ]

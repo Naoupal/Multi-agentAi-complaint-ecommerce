@@ -50,7 +50,7 @@ def get_llm_config():
                 "api_key": ANTHROPIC_API_KEY,
                 "api_type": "anthropic",
             }],
-            "temperature": 0,
+            "temperature": 0.2,
         }
     elif LLM_PROVIDER == "groq":
         return {
