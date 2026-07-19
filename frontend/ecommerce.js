@@ -13,11 +13,15 @@ const cwInput = document.getElementById('cwInput');
 const cwSend = document.getElementById('cwSend');
 const cwQuickActions = document.getElementById('cwQuickActions');
 const aiBannerBtn = document.getElementById('aiBannerBtn');
+const cwContextChip = document.getElementById('cwContextChip');
+const cwContextText = document.getElementById('cwContextText');
+const cwContextClose = document.getElementById('cwContextClose');
 
 // --- State ---
 let isOpen = false;
 let isProcessing = false;
 let hasGreeted = false;
+let activeOrderContext = null;
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   chatFab.addEventListener('click', toggleChat);
   cwClose.addEventListener('click', toggleChat);
+
+  if (cwContextClose) {
+    cwContextClose.addEventListener('click', () => {
+      setActiveOrderContext(null);
+    });
+  }
 
   cwSend.addEventListener('click', sendMessage);
   cwInput.addEventListener('keydown', (e) => {
@@ -59,17 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
   // Order complaint buttons
   document.querySelectorAll('.order-complaint-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const msg = btn.dataset.complaint;
-      if (msg) {
-        if (!isOpen) toggleChat();
-        setTimeout(() => {
-          cwInput.value = msg;
-          cwInput.focus();
-        }, 400);
+      const orderId = btn.dataset.orderId || btn.closest('.ec-order-card')?.dataset?.orderId;
+      const msg = btn.dataset.complaint || '';
+      
+      if (orderId) {
+        setActiveOrderContext(orderId);
       }
+      
+      if (!isOpen) toggleChat();
+      setTimeout(() => {
+        if (msg) {
+          cwInput.value = msg;
+        }
+        cwInput.focus();
+      }, 400);
     });
   });
 });
+
+// --- Set Active Order Context ---
+function setActiveOrderContext(orderId) {
+  activeOrderContext = orderId;
+  if (!cwContextChip || !cwContextText) return;
+
+  if (orderId) {
+    const shortId = orderId.toUpperCase().slice(0, 12);
+    cwContextText.textContent = `📦 Order ORD-${shortId}`;
+    cwContextChip.title = `Order ID: ${orderId}`;
+    cwContextChip.style.display = 'flex';
+  } else {
+    cwContextChip.style.display = 'none';
+  }
+  lucide.createIcons({ nodes: [cwContextChip] });
+}
 
 // --- Toggle Chat ---
 function toggleChat() {
@@ -103,7 +135,11 @@ function showGreeting() {
   }, 300);
 }
 
-// --- Send Message ---
+// --- Send Message / sendComplaint ---
+async function sendComplaint() {
+  return sendMessage();
+}
+
 async function sendMessage() {
   const msg = cwInput.value.trim();
   if (!msg || isProcessing) return;
@@ -122,7 +158,10 @@ async function sendMessage() {
     const res = await fetch(`${API_BASE}/complaint`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: msg }),
+      body: JSON.stringify({
+        message: msg,
+        order_id: activeOrderContext || null
+      }),
     });
 
     hideTyping();

@@ -1,5 +1,6 @@
 import os
 import json
+from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -31,13 +32,18 @@ ACTION_STORES = {
 
 class ComplaintRequest(BaseModel):
     message: str
+    order_id: Optional[str] = None
 
 
 # --- API routes (MUST be defined BEFORE app.mount) ---
 
 @app.post("/complaint")
 def resolve_complaint(req: ComplaintRequest):
-    transcript = handle_complaint(req.message)
+    message_to_send = req.message
+    if req.order_id and req.order_id.strip():
+        message_to_send = f"[Order ID: {req.order_id.strip()}] {req.message}"
+
+    transcript = handle_complaint(message_to_send)
     final_response = transcript[-1]["content"] if transcript else "Tidak ada respons."
     final_response_clean = final_response.replace("SELESAI", "").strip()
     return {"response": final_response_clean, "trace": transcript}

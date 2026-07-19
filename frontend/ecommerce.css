@@ -1002,6 +1002,45 @@ a { text-decoration: none; color: inherit; }
   flex-shrink: 0;
 }
 
+/* Context Chip */
+.cw-context-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: #D8B4FE;
+}
+
+.cw-context-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.cw-context-close {
+  background: transparent;
+  border: none;
+  color: var(--chat-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.cw-context-close:hover {
+  color: var(--chat-text);
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .cw-input-row {
   display: flex;
   gap: 8px;

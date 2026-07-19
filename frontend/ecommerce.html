@@ -77,8 +77,8 @@
       </div>
 
       <div class="ec-orders-grid">
-        <!-- Order 1 — Dikirim -->
-        <div class="ec-order-card">
+        <!-- Order 1 — Dikirim / Tepat Waktu -->
+        <div class="ec-order-card" data-order-id="00275bce676303c3bfd7292aefdfa223">
           <div class="ec-order-top">
             <span class="ec-order-id">ORD-00275BCE6763</span>
             <span class="ec-order-status shipped">
@@ -94,18 +94,18 @@
           </div>
           <div class="ec-order-bottom">
             <span class="ec-order-price">Rp 299.000</span>
-            <button class="ec-order-action order-complaint-btn" data-complaint="Order saya 00275bce676303c3bfd7292aefdfa223 kapan sampai ya? Sudah lama sekali menunggu.">
+            <button class="ec-order-action order-complaint-btn" data-order-id="00275bce676303c3bfd7292aefdfa223" data-complaint="Kapan paket ini sampai ya? Sudah lama sekali menunggu.">
               <i data-lucide="message-circle"></i> Komplain
             </button>
           </div>
         </div>
 
-        <!-- Order 2 — Diproses -->
-        <div class="ec-order-card">
+        <!-- Order 2 — Keterlambatan / Refund -->
+        <div class="ec-order-card" data-order-id="dfe5f68118c2576143240b8d78e5940a">
           <div class="ec-order-top">
-            <span class="ec-order-id">ORD-8272B1A4F5E0</span>
+            <span class="ec-order-id">ORD-DFE5F68118C2</span>
             <span class="ec-order-status processing">
-              <i data-lucide="loader"></i> Diproses
+              <i data-lucide="alert-triangle"></i> Terlambat
             </span>
           </div>
           <div class="ec-order-product">
@@ -117,18 +117,18 @@
           </div>
           <div class="ec-order-bottom">
             <span class="ec-order-price">Rp 1.499.000</span>
-            <button class="ec-order-action order-complaint-btn" data-complaint="Saya sudah bayar order 00275bce676303c3bfd7292aefdfa223 tapi mau tahu status pembayarannya, sudah lunas belum?">
+            <button class="ec-order-action order-complaint-btn" data-order-id="dfe5f68118c2576143240b8d78e5940a" data-complaint="Order ini telat lebih dari 14 hari dari estimasi, tolong proses refund penuh sekarang.">
               <i data-lucide="message-circle"></i> Komplain
             </button>
           </div>
         </div>
 
-        <!-- Order 3 — Selesai -->
-        <div class="ec-order-card">
+        <!-- Order 3 — Status Unavailable / Kirim Ulang -->
+        <div class="ec-order-card" data-order-id="bbdef4b5ecad947f721ab789db1dd57f">
           <div class="ec-order-top">
-            <span class="ec-order-id">ORD-F3A5C2D891B7</span>
-            <span class="ec-order-status completed">
-              <i data-lucide="check-circle"></i> Selesai
+            <span class="ec-order-id">ORD-BBDEF4B5ECAD</span>
+            <span class="ec-order-status processing">
+              <i data-lucide="help-circle"></i> Kendala Kurir
             </span>
           </div>
           <div class="ec-order-product">
@@ -140,7 +140,30 @@
           </div>
           <div class="ec-order-bottom">
             <span class="ec-order-price">Rp 389.000</span>
-            <button class="ec-order-action order-complaint-btn" data-complaint="Produk yang saya terima kualitasnya jelek, apakah ada keluhan serupa dari pembeli lain untuk order sejenis?">
+            <button class="ec-order-action order-complaint-btn" data-order-id="bbdef4b5ecad947f721ab789db1dd57f" data-complaint="Paket order ini hilang dan statusnya unavailable di kurir, tolong kirim ulang barangnya.">
+              <i data-lucide="message-circle"></i> Komplain
+            </button>
+          </div>
+        </div>
+
+        <!-- Order 4 — Kualitas Buruk / Replacement -->
+        <div class="ec-order-card" data-order-id="7bd04fdb3a54efa83cbf7320b1bb4b6f">
+          <div class="ec-order-top">
+            <span class="ec-order-id">ORD-7BD04FDB3A54</span>
+            <span class="ec-order-status completed">
+              <i data-lucide="check-circle"></i> Selesai
+            </span>
+          </div>
+          <div class="ec-order-product">
+            <img class="ec-order-thumb" src="/static/images/product_shoes.jpg" alt="Running Shoes" />
+            <div class="ec-order-product-info">
+              <h4>Running Shoes Max Air</h4>
+              <p>Abu-abu · 1 barang</p>
+            </div>
+          </div>
+          <div class="ec-order-bottom">
+            <span class="ec-order-price">Rp 899.000</span>
+            <button class="ec-order-action order-complaint-btn" data-order-id="7bd04fdb3a54efa83cbf7320b1bb4b6f" data-complaint="Barang yang saya terima kualitasnya rusak dan cacat, saya minta penggantian barang baru.">
               <i data-lucide="message-circle"></i> Komplain
             </button>
           </div>
@@ -343,6 +366,15 @@
 
     <!-- Input -->
     <div class="cw-input-area">
+      <div class="cw-context-chip" id="cwContextChip" style="display: none;">
+        <div class="cw-context-content">
+          <i data-lucide="package" style="width:14px;height:14px;"></i>
+          <span id="cwContextText">📦 Order ORD-00275BCE6763</span>
+        </div>
+        <button class="cw-context-close" id="cwContextClose" title="Hapus konteks order">
+          <i data-lucide="x" style="width:14px;height:14px;"></i>
+        </button>
+      </div>
       <div class="cw-input-row">
         <textarea
           class="cw-input"
