@@ -16,12 +16,19 @@ const aiBannerBtn = document.getElementById('aiBannerBtn');
 const cwContextChip = document.getElementById('cwContextChip');
 const cwContextText = document.getElementById('cwContextText');
 const cwContextClose = document.getElementById('cwContextClose');
+const cwAttachBtn = document.getElementById('cwAttachBtn');
+const cwImageInput = document.getElementById('cwImageInput');
+const cwImagePreview = document.getElementById('cwImagePreview');
+const cwPreviewImg = document.getElementById('cwPreviewImg');
+const cwPreviewName = document.getElementById('cwPreviewName');
+const cwPreviewClose = document.getElementById('cwPreviewClose');
 
 // --- State ---
 let isOpen = false;
 let isProcessing = false;
 let hasGreeted = false;
 let activeOrderContext = null;
+let selectedImageFile = null;
 
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +40,33 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cwContextClose) {
     cwContextClose.addEventListener('click', () => {
       setActiveOrderContext(null);
+    });
+  }
+
+  if (cwAttachBtn && cwImageInput) {
+    cwAttachBtn.addEventListener('click', () => {
+      cwImageInput.click();
+    });
+
+    cwImageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        selectedImageFile = file;
+        if (cwPreviewName) cwPreviewName.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          if (cwPreviewImg) cwPreviewImg.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+        if (cwImagePreview) cwImagePreview.style.display = 'flex';
+        lucide.createIcons({ nodes: [cwImagePreview] });
+      }
+    });
+  }
+
+  if (cwPreviewClose) {
+    cwPreviewClose.addEventListener('click', () => {
+      clearSelectedImage();
     });
   }
 
@@ -135,6 +169,14 @@ function showGreeting() {
   }, 300);
 }
 
+// --- Clear Selected Image ---
+function clearSelectedImage() {
+  selectedImageFile = null;
+  if (cwImageInput) cwImageInput.value = '';
+  if (cwImagePreview) cwImagePreview.style.display = 'none';
+  if (cwPreviewImg) cwPreviewImg.src = '';
+}
+
 // --- Send Message / sendComplaint ---
 async function sendComplaint() {
   return sendMessage();
@@ -142,27 +184,47 @@ async function sendComplaint() {
 
 async function sendMessage() {
   const msg = cwInput.value.trim();
-  if (!msg || isProcessing) return;
+  if ((!msg && !selectedImageFile) || isProcessing) return;
 
   isProcessing = true;
   cwSend.disabled = true;
   hideQuickActions();
 
-  addUserMessage(msg);
+  let userDisplayMsg = msg;
+  if (selectedImageFile) {
+    userDisplayMsg = (msg ? msg + '\n' : '') + `[📷 Gambar dilampirkan: ${selectedImageFile.name}]`;
+  }
+  addUserMessage(userDisplayMsg);
+
   cwInput.value = '';
   cwInput.style.height = 'auto';
 
   showTyping();
 
   try {
-    const res = await fetch(`${API_BASE}/complaint`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: msg,
-        order_id: activeOrderContext || null
-      }),
-    });
+    let fetchOptions;
+    if (selectedImageFile) {
+      const formData = new FormData();
+      if (msg) formData.append('message', msg);
+      if (activeOrderContext) formData.append('order_id', activeOrderContext);
+      formData.append('image', selectedImageFile);
+
+      fetchOptions = {
+        method: 'POST',
+        body: formData,
+      };
+    } else {
+      fetchOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: msg,
+          order_id: activeOrderContext || null
+        }),
+      };
+    }
+
+    const res = await fetch(`${API_BASE}/complaint`, fetchOptions);
 
     hideTyping();
 
@@ -190,6 +252,7 @@ async function sendMessage() {
   } finally {
     isProcessing = false;
     cwSend.disabled = false;
+    clearSelectedImage();
     cwInput.focus();
     showQuickActions();
   }

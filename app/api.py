@@ -1,12 +1,15 @@
 import os
 import json
+import base64
+import asyncio
 from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from src.agents.orchestrator_agent import handle_complaint
+from src.agents.image_context import set_current_image, clear_current_image
 from src.config import BASE_DIR
 
 app = FastAPI(title="Multi-Agent Complaint Resolution API")
@@ -38,12 +41,63 @@ class ComplaintRequest(BaseModel):
 # --- API routes (MUST be defined BEFORE app.mount) ---
 
 @app.post("/complaint")
-def resolve_complaint(req: ComplaintRequest):
-    message_to_send = req.message
-    if req.order_id and req.order_id.strip():
-        message_to_send = f"[Order ID: {req.order_id.strip()}] {req.message}"
+async def resolve_complaint(request: Request):
+    content_type = request.headers.get("content-type", "").lower()
+    message = ""
+    order_id = None
+    image_base64 = None
 
-    transcript = handle_complaint(message_to_send)
+    if "application/json" in content_type:
+        try:
+            body = await request.json()
+            message = body.get("message", "") or ""
+            order_id = body.get("order_id")
+            image_base64 = body.get("image") or body.get("image_base64")
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid JSON body")
+    else:
+        try:
+            form = await request.form()
+            message = form.get("message", "") or ""
+            order_id = form.get("order_id")
+            if isinstance(order_id, str):
+                order_id = order_id.strip()
+            image_file = form.get("image")
+            if image_file and hasattr(image_file, "read"):
+                contents = await image_file.read()
+                if contents:
+                    image_base64 = base64.b64encode(contents).decode("utf-8")
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Invalid form data: {str(e)}")
+
+    if isinstance(message, str):
+        message = message.strip()
+    if isinstance(order_id, str):
+        order_id = order_id.strip() or None
+    if isinstance(image_base64, str):
+        image_base64 = image_base64.strip() or None
+
+    if not message and not image_base64:
+        raise HTTPException(status_code=400, detail="Minimal salah satu dari message atau image harus diisi.")
+
+    parts = []
+    if order_id:
+        parts.append(f"[Order ID: {order_id}]")
+    if image_base64:
+        parts.append("[Gambar produk terlampir untuk diperiksa]")
+    if message:
+        parts.append(message)
+    else:
+        parts.append("Gambar produk dilampirkan untuk pemeriksaan kualitas.")
+
+    message_to_send = " ".join(parts)
+
+    try:
+        set_current_image(image_base64)
+        transcript = await asyncio.to_thread(handle_complaint, message_to_send)
+    finally:
+        clear_current_image()
+
     final_response = transcript[-1]["content"] if transcript else "Tidak ada respons."
     final_response_clean = final_response.replace("SELESAI", "").strip()
     return {"response": final_response_clean, "trace": transcript}

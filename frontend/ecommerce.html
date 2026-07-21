@@ -375,7 +375,18 @@
           <i data-lucide="x" style="width:14px;height:14px;"></i>
         </button>
       </div>
+      <div class="cw-image-preview" id="cwImagePreview" style="display: none;">
+        <img id="cwPreviewImg" src="" alt="Preview Gambar" />
+        <span id="cwPreviewName" class="cw-preview-name">foto.jpg</span>
+        <button class="cw-preview-close" id="cwPreviewClose" title="Hapus gambar">
+          <i data-lucide="x" style="width:14px;height:14px;"></i>
+        </button>
+      </div>
       <div class="cw-input-row">
+        <input type="file" id="cwImageInput" accept="image/*" style="display: none;" />
+        <button class="cw-attach" id="cwAttachBtn" title="Lampirkan foto produk">
+          <i data-lucide="camera"></i>
+        </button>
         <textarea
           class="cw-input"
           id="cwInput"

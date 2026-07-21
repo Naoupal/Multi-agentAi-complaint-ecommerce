@@ -1,0 +1,23 @@
+[
+  {
+    "replacement_id": "RPL-7CDA88B1",
+    "order_id": "dfe5f68118c2576143240b8d78e5940a",
+    "issue_description": "produk rusak",
+    "status": "requested",
+    "timestamp": "2026-07-18T08:20:18.709068+00:00"
+  },
+  {
+    "replacement_id": "RPL-D4DA4446",
+    "order_id": "123456",
+    "issue_description": "produk rusak dan tidak sesuai dengan deskripsi",
+    "status": "requested",
+    "timestamp": "2026-07-18T14:34:34.457858+00:00"
+  },
+  {
+    "replacement_id": "RPL-A3BC358B",
+    "order_id": "7bd04fdb3a54efa83cbf7320b1bb4b6f",
+    "issue_description": "kualitas produk rusak dan cacat",
+    "status": "requested",
+    "timestamp": "2026-07-19T13:25:02.678548+00:00"
+  }
+]

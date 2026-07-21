@@ -39,5 +39,13 @@
     "expected_agents": ["QAAgent"],
     "expect_action": true,
     "expect_action_type": "replacement"
+  },
+  {
+    "id": "S8",
+    "input": "[Order ID: 7bd04fdb3a54efa83cbf7320b1bb4b6f] [Image Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==] Barang yang saya terima ada retak fisik dan cacat kualitas, tolong periksa foto produk ini dan proses penggantian barang baru",
+    "expected_agents": ["QAAgent"],
+    "expect_action": true,
+    "expect_action_type": "replacement",
+    "manual_test_only": true
   }
 ]

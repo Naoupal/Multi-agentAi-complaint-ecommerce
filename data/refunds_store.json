@@ -1,0 +1,74 @@
+[
+  {
+    "refund_id": "REF-42E6155D",
+    "order_id": "dfe5f68118c2576143240b8d78e5940a",
+    "reason": "keterlambatan pengiriman",
+    "amount": 136.14,
+    "status": "processed",
+    "timestamp": "2026-07-18T07:49:24.412647+00:00"
+  },
+  {
+    "refund_id": "REF-2EA5E757",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T08:47:05.639928+00:00"
+  },
+  {
+    "refund_id": "REF-5D129B51",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T14:17:46.734543+00:00"
+  },
+  {
+    "refund_id": "REF-AA850DB5",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T14:25:21.596375+00:00"
+  },
+  {
+    "refund_id": "REF-BD3E0E5E",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T14:27:02.937040+00:00"
+  },
+  {
+    "refund_id": "REF-EE2352D9",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T14:31:20.754986+00:00"
+  },
+  {
+    "refund_id": "REF-9B9F7EE5",
+    "order_id": "616fa7d4871b87832197b2a137a115d2",
+    "reason": "keterlambatan pengiriman",
+    "amount": 80.38,
+    "status": "processed",
+    "timestamp": "2026-07-18T14:34:35.964044+00:00"
+  },
+  {
+    "refund_id": "REF-E368BEC6",
+    "order_id": "dfe5f68118c2576143240b8d78e5940a",
+    "reason": "keterlambatan pengiriman",
+    "amount": 136.14,
+    "status": "processed",
+    "timestamp": "2026-07-19T13:24:23.374964+00:00"
+  },
+  {
+    "refund_id": "REF-9384052F",
+    "order_id": "dfe5f68118c2576143240b8d78e5940a",
+    "reason": "keterlambatan pengiriman",
+    "amount": 136.14,
+    "status": "processed",
+    "timestamp": "2026-07-20T05:08:48.283720+00:00"
+  }
+]
